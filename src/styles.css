@@ -20,7 +20,7 @@ header {
   margin-top: 20px;
 }
 
-.home__content {
+.home__books {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -66,4 +66,23 @@ header {
 .wishlist button {
   height: fit-content;
   align-self: center;
+}
+
+.page__buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin: 20px 0 20px 0;
+}
+
+.page__buttons button {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid rgb(183, 182, 182);
+}
+
+.button__selected {
+  background-color: rgb(159, 185, 255);
 }

@@ -28,6 +28,7 @@ export const getBooksWithTitle = createAsyncThunk(
 export const booksSlice = createSlice({
   name: "books",
   initialState: {
+    currentPageNum: 1,
     searchText: "",
     isLoading: false,
     wishlist: [],
@@ -48,6 +49,10 @@ export const booksSlice = createSlice({
     },
     editSearchText: (state, action) => {
       state.searchText = action.payload;
+      state.currentPageNum = 1;
+    },
+    editCurrentPageNum: (state, action) => {
+      state.currentPageNum = action.payload;
     },
   },
   extraReducers: {
@@ -61,7 +66,11 @@ export const booksSlice = createSlice({
   },
 });
 
-export const { addToWishlist, removeFromWishlist, editSearchText } =
-  booksSlice.actions;
+export const {
+  addToWishlist,
+  removeFromWishlist,
+  editSearchText,
+  editCurrentPageNum,
+} = booksSlice.actions;
 
 export default booksSlice.reducer;
