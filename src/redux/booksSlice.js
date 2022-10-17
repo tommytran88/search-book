@@ -17,7 +17,7 @@ export const getBooksWithTitle = createAsyncThunk(
         title: book.volumeInfo.title || "N/A",
         image: book.volumeInfo.imageLinks?.smallThumbnail || "N/A",
         publisher: book.volumeInfo.publisher || "N/A",
-        publishedDate: book.volumeInfo.publishedData || "N/A",
+        publishedDate: book.volumeInfo.publishedDate || "N/A",
         description: book.volumeInfo.description || "N/A",
       });
     });
