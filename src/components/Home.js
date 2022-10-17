@@ -3,20 +3,36 @@ import { editSearchText, getBooksWithTitle } from "../redux/booksSlice";
 import BookGroup from "./BookGroup/BookGroup";
 import Loader from "./BookGroup/Loader";
 
+import { fromEvent } from "rxjs";
+import { debounceTime } from "rxjs/operators";
+import { useEffect, useRef } from "react";
+
 const Home = () => {
   const isLoading = useSelector((state) => state.books.isLoading);
   const searchText = useSelector((state) => state.books.searchText);
+  const inputRef = useRef(null);
   const dispatch = useDispatch();
-  const handleOnChange = (e) => {
-    dispatch(editSearchText(e.target.value));
-    dispatch(getBooksWithTitle());
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    dispatch(getBooksWithTitle(searchText));
+  }, [dispatch, searchText]);
+
+  const handleOnChange = () => {
+    const debounceOnChange = fromEvent(inputRef.current, "keyup");
+    debounceOnChange.pipe(debounceTime(500)).subscribe((e) => {
+      dispatch(editSearchText(e.target.value));
+    });
   };
   return (
     <div className="home">
       <input
+        ref={inputRef}
         onChange={handleOnChange}
-        placeholder="Enter book title"
-        value={searchText}
+        defaultValue={searchText}
       ></input>
       {isLoading ? <Loader /> : <BookGroup />}
     </div>

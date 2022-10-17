@@ -3,9 +3,12 @@ import booksApi from "../APIs/booksApi";
 
 export const getBooksWithTitle = createAsyncThunk(
   "books/getBooksWithTitle",
-  async (_, thunkAPI) => {
-    const title = thunkAPI.getState().books.searchText;
-    if (title === "") return [];
+  async (title, thunkAPI) => {
+    if (title === "") {
+      return new Promise((resolve, reject) => {
+        resolve([]);
+      });
+    }
     const response = await booksApi(title);
     const booksData = [];
     response.items.forEach((book) => {
