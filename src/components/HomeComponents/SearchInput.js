@@ -11,26 +11,17 @@ const SearchInput = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+    const debounceOnChange = fromEvent(inputRef.current, "keyup");
+    debounceOnChange.pipe(debounceTime(500)).subscribe((e) => {
+      dispatch(editSearchText(e.target.value));
+    });
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getBooksWithTitle(searchText));
   }, [dispatch, searchText]);
 
-  const handleOnChange = () => {
-    const debounceOnChange = fromEvent(inputRef.current, "keyup");
-    debounceOnChange.pipe(debounceTime(500)).subscribe((e) => {
-      dispatch(editSearchText(e.target.value));
-    });
-  };
-  return (
-    <input
-      ref={inputRef}
-      onChange={handleOnChange}
-      defaultValue={searchText}
-    ></input>
-  );
+  return <input ref={inputRef} defaultValue={searchText}></input>;
 };
 
 export default SearchInput;
